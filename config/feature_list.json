@@ -1,0 +1,74 @@
+{
+  "project": {
+    "name": "RoRchestrator-Demo",
+    "description": "Configuration de démonstration pour tester RoRchestrator",
+    "repo_path": ".",
+    "base_branch": "master",
+    "max_parallel": 2,
+    "timeout_seconds": 300
+  },
+  "prompts": {
+    "context_file": "prompts/_context.md",
+    "quality_rules": [
+      "Code must be well-documented",
+      "Tests required for each feature"
+    ]
+  },
+  "claude": {
+    "permission_mode": "acceptEdits",
+    "allowed_tools": [
+      "Read",
+      "Write",
+      "Edit"
+    ]
+  },
+  "features": [
+    {
+      "id": "auth-gtin",
+      "name": "Authentification GTIN",
+      "description": "Implémenter la validation des codes GTIN selon standards GS1",
+      "depends_on": [],
+      "prompt_file": "auth-gtin.md",
+      "creates": [
+        "GtinValidator class",
+        "Product#valid_gtin? method"
+      ],
+      "estimated_tokens": 50000,
+      "priority": 1,
+      "tags": ["core", "validation"]
+    },
+    {
+      "id": "api-lookup",
+      "name": "API Lookup produit",
+      "description": "Endpoint REST pour recherche produit par GTIN",
+      "depends_on": ["auth-gtin"],
+      "prompt_file": "api-lookup.md",
+      "uses": ["GtinValidator class"],
+      "estimated_tokens": 30000,
+      "priority": 2,
+      "tags": ["api", "rest"]
+    },
+    {
+      "id": "batch-import",
+      "name": "Import batch CSV",
+      "description": "Importer produits depuis fichiers CSV GS1",
+      "depends_on": ["auth-gtin"],
+      "prompt_file": "batch-import.md",
+      "uses": ["Product#valid_gtin? method"],
+      "estimated_tokens": 40000,
+      "priority": 2,
+      "tags": ["import", "csv"]
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard traçabilité",
+      "description": "Interface Hotwire pour visualiser flux produits",
+      "depends_on": ["api-lookup", "batch-import"],
+      "prompt_file": "dashboard.md",
+      "uses": ["API lookup endpoint", "Imported products"],
+      "estimated_tokens": 60000,
+      "priority": 3,
+      "tags": ["frontend", "hotwire"]
+    }
+  ]
+}

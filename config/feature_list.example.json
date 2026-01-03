@@ -1,0 +1,78 @@
+{
+  "project": {
+    "name": "GS1-TraceabilityModule",
+    "description": "Module de traçabilité pour la construction selon standards GS1",
+    "repo_path": "/Users/rollandmelet/Développement/Projets/GS1France",
+    "base_branch": "main",
+    "max_parallel": 3,
+    "timeout_seconds": 1800
+  },
+  "prompts": {
+    "context_file": "prompts/_context.md",
+    "quality_rules": [
+      "Tests RSpec requis pour chaque feature",
+      "Suivre les standards GS1 pour les identifiants",
+      "Documentation inline obligatoire",
+      "Rubocop doit passer sans erreur"
+    ]
+  },
+  "claude": {
+    "permission_mode": "acceptEdits",
+    "allowed_tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(bundle exec rspec)",
+      "Bash(bundle exec rubocop)"
+    ]
+  },
+  "features": [
+    {
+      "id": "auth-gtin",
+      "name": "Authentification GTIN",
+      "description": "Implémenter la validation des codes GTIN selon standards GS1",
+      "depends_on": [],
+      "prompt_file": "prompts/auth-gtin.md",
+      "creates": [
+        "GtinValidator class",
+        "Product#valid_gtin? method"
+      ],
+      "estimated_tokens": 50000,
+      "priority": 1,
+      "tags": ["core", "validation"]
+    },
+    {
+      "id": "api-lookup",
+      "name": "API Lookup produit",
+      "description": "Endpoint REST pour recherche produit par GTIN",
+      "depends_on": ["auth-gtin"],
+      "prompt_file": "prompts/api-lookup.md",
+      "uses": ["GtinValidator class"],
+      "estimated_tokens": 30000,
+      "priority": 2,
+      "tags": ["api", "rest"]
+    },
+    {
+      "id": "batch-import",
+      "name": "Import batch CSV",
+      "description": "Importer produits depuis fichiers CSV GS1",
+      "depends_on": ["auth-gtin"],
+      "prompt_file": "prompts/batch-import.md",
+      "uses": ["Product#valid_gtin? method"],
+      "estimated_tokens": 40000,
+      "priority": 2,
+      "tags": ["import", "csv"]
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard traçabilité",
+      "description": "Interface Hotwire pour visualiser flux produits",
+      "depends_on": ["api-lookup", "batch-import"],
+      "prompt_file": "prompts/dashboard.md",
+      "uses": ["API lookup endpoint", "Imported products"],
+      "estimated_tokens": 60000,
+      "priority": 3,
+      "tags": ["frontend", "hotwire"]
+    }
+  ]
+}

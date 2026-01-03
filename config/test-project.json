@@ -1,0 +1,75 @@
+{
+  "project": {
+    "name": "TestProject-TodoApp",
+    "description": "Simple TODO app pour tester RoRchestrator en conditions réelles",
+    "repo_path": "../test-project",
+    "base_branch": "main",
+    "max_parallel": 2,
+    "timeout_seconds": 600
+  },
+  "prompts": {
+    "context_file": "prompts/test-project/_context.md",
+    "quality_rules": [
+      "Code doit utiliser uniquement Python stdlib",
+      "Tests unitaires requis avec unittest",
+      "Docstrings pour toutes les fonctions publiques"
+    ]
+  },
+  "claude": {
+    "permission_mode": "acceptEdits",
+    "allowed_tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(python -m unittest discover tests/)",
+      "Bash(python -m pytest tests/)"
+    ]
+  },
+  "features": [
+    {
+      "id": "task-model",
+      "name": "Task Model",
+      "description": "Créer le modèle Task avec attributs de base (id, title, done, created_at)",
+      "depends_on": [],
+      "prompt_file": "test-project/task-model.md",
+      "creates": [
+        "Task class",
+        "Task.to_dict() method",
+        "Task.from_dict() method"
+      ],
+      "estimated_tokens": 15000,
+      "priority": 1,
+      "tags": ["core", "model"]
+    },
+    {
+      "id": "task-storage",
+      "name": "Task Storage",
+      "description": "Système de persistance JSON pour les tasks",
+      "depends_on": ["task-model"],
+      "prompt_file": "test-project/task-storage.md",
+      "uses": ["Task class", "Task.to_dict()", "Task.from_dict()"],
+      "creates": [
+        "TaskStorage class",
+        "save_tasks() function",
+        "load_tasks() function"
+      ],
+      "estimated_tokens": 20000,
+      "priority": 2,
+      "tags": ["storage", "persistence"]
+    },
+    {
+      "id": "cli-interface",
+      "name": "CLI Interface",
+      "description": "Interface en ligne de commande pour gérer les tasks",
+      "depends_on": ["task-model", "task-storage"],
+      "prompt_file": "test-project/cli-interface.md",
+      "uses": ["Task class", "TaskStorage class"],
+      "creates": [
+        "CLI commands: add, list, done, delete"
+      ],
+      "estimated_tokens": 25000,
+      "priority": 3,
+      "tags": ["cli", "interface"]
+    }
+  ]
+}
