@@ -17,12 +17,12 @@
 
 ```bash
 # Method 1: Global wrapper (recommended)
-curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/YOUR_USERNAME/rorchestrator/main/install/wrapper.sh
+curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/RollandMELET/RoRchestrator/main/install/wrapper.sh
 chmod +x ~/bin/rorchestrator
 
 # Method 2: Clone into your project
 cd /path/to/your/project
-git clone https://github.com/YOUR_USERNAME/rorchestrator.git orchestrator
+git clone https://github.com/RollandMELET/RoRchestrator.git orchestrator
 cd orchestrator
 ```
 
@@ -577,13 +577,13 @@ rorchestrator run --config config/my-custom.json --yes
 
 ## 🤝 Contributing
 
-Contributions welcome! This project started as an analysis in [101ÉvolutionLab](https://github.com/YOUR_USERNAME/101EvolutionLab) and evolved into a production tool.
+Contributions welcome! This project started as an analysis in 101ÉvolutionLab and evolved into a production tool.
 
 ### Development Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/rorchestrator.git
-cd rorchestrator
+git clone https://github.com/RollandMELET/RoRchestrator.git
+cd RoRchestrator
 python3 -m unittest discover tests -v
 ```
 

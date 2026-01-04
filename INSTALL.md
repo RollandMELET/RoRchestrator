@@ -37,7 +37,7 @@ This installs a `rorchestrator` command available everywhere.
 
 ```bash
 # 1. Download wrapper script
-curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/rollandmelet/rorchestrator/main/install/wrapper.sh
+curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/RollandMELET/RoRchestrator/main/install/wrapper.sh
 
 # 2. Make executable
 chmod +x ~/bin/rorchestrator
@@ -70,7 +70,7 @@ Install RoRchestrator directly in your project.
 cd /path/to/your/project
 
 # 2. Clone RoRchestrator
-git clone https://github.com/rollandmelet/rorchestrator.git orchestrator
+git clone https://github.com/RollandMELET/RoRchestrator.git orchestrator
 
 # 3. Verify
 cd orchestrator
@@ -83,7 +83,7 @@ python3 orchestrate.py --help
 
 ```bash
 # 1. Download
-curl -L https://github.com/rollandmelet/rorchestrator/archive/main.zip -o rorchestrator.zip
+curl -L https://github.com/RollandMELET/RoRchestrator/archive/main.zip -o rorchestrator.zip
 
 # 2. Extract
 unzip rorchestrator.zip
@@ -197,7 +197,7 @@ What this feature should do.
 
 ```bash
 # Re-download wrapper script
-curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/rollandmelet/rorchestrator/main/install/wrapper.sh
+curl -o ~/bin/rorchestrator https://raw.githubusercontent.com/RollandMELET/RoRchestrator/main/install/wrapper.sh
 chmod +x ~/bin/rorchestrator
 ```
 
